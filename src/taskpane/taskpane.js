@@ -13,6 +13,7 @@ Office.onReady((info) =>
     document.getElementById("filter-table").onclick = () => tryCatch(filterTable);
     document.getElementById("sort-table").onclick = () => tryCatch(sortTable);
     document.getElementById("create-chart").onclick = () => tryCatch(createChart);
+    document.getElementById("freeze-header").onclick = () => tryCatch(freezeHeader);
     document.getElementById("sideload-msg").style.display = "none";
     document.getElementById("app-body").style.display = "flex";
   }
@@ -105,6 +106,16 @@ async function createChart() {
 
     await context.sync();
   })
+}
+
+async function freezeHeader() {
+  await Excel.run(async (context) => {
+
+    const currentWorksheet = context.workbook.worksheets.getActiveWorksheet();
+    currentWorksheet.freezePanes.freezeRows(1);
+
+    await context.sync();
+  });
 }
 
 
